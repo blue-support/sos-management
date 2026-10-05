@@ -1,0 +1,896 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090c">
+  <meta name="description" content="SOS Management Group – Newcomer Management für Emergency Emden Privat DC Server und TikTok-Anliegen.">
+  <title>SOS Management Group</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #07080b;
+      --bg2: #0d0f14;
+      --text: #f7f7f8;
+      --muted: #a7abb5;
+      --orange: #ff6800;
+      --orange-light: #ff9b4a;
+      --blue: #4da3ff;
+      --border: rgba(255,255,255,.09);
+      --card: rgba(255,255,255,.045);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,104,0,.13), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(77,163,255,.10), transparent 28%),
+        linear-gradient(145deg, #050608, #0b0c10 55%, #07080b);
+      font-family: "Inter", sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Hintergrund */
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: .035;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='%23n' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .orb {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .12;
+      pointer-events: none;
+      z-index: -1;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+
+    .orb.orange {
+      background: var(--orange);
+      left: -220px;
+      top: 35%;
+    }
+
+    .orb.blue {
+      background: var(--blue);
+      right: -230px;
+      top: 60%;
+      animation-delay: -4s;
+    }
+
+    @keyframes drift {
+      to {
+        transform: translate(60px, -50px) scale(1.1);
+      }
+    }
+
+    /* Navigation */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 18px 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(7,8,11,.9),
+        rgba(7,8,11,.1)
+      );
+      backdrop-filter: blur(12px);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-size: 12px;
+      background: linear-gradient(145deg, #ff7d1c, #e94d00);
+      box-shadow: 0 8px 30px rgba(255,104,0,.3);
+    }
+
+    .brand-name {
+      font-size: 15px;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: -2px;
+      color: var(--orange-light);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .nav-button {
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+      color: #dddfe5;
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,104,0,.5);
+      color: white;
+    }
+
+    /* Hero */
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      place-items: center;
+      padding: 150px 0 90px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255,104,0,.25);
+      border-radius: 999px;
+      background: rgba(255,104,0,.07);
+      color: #ffb36f;
+      font-size: 12px;
+      font-weight: 600;
+      animation: fadeUp .7s both;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff7615;
+      box-shadow: 0 0 0 0 rgba(255,104,0,.7);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      70% {
+        box-shadow: 0 0 0 9px rgba(255,104,0,0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(255,104,0,0);
+      }
+    }
+
+    h1 {
+      margin-bottom: 27px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: .98;
+      letter-spacing: -.065em;
+      animation: fadeUp .7s .08s both;
+    }
+
+    h1 span {
+      background: linear-gradient(
+        100deg,
+        white 5%,
+        #ff9b4a 45%,
+        #ff5900 80%
+      );
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 740px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      animation: fadeUp .7s .16s both;
+    }
+
+    .hero-description strong {
+      color: #e6e7ea;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+      animation: fadeUp .7s .24s both;
+    }
+
+    .button {
+      min-height: 51px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 21px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+    }
+
+    .primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #ff7918, #ee4d00);
+      box-shadow: 0 12px 35px rgba(255,104,0,.23);
+    }
+
+    .primary:hover {
+      box-shadow: 0 17px 45px rgba(255,104,0,.35);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.04);
+    }
+
+    .secondary:hover {
+      border-color: rgba(255,255,255,.25);
+    }
+
+    /* Sections */
+
+    section {
+      padding: 80px 0;
+    }
+
+    .eyebrow {
+      margin-bottom: 9px;
+      color: var(--orange-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(30px, 4vw, 45px);
+      letter-spacing: -.04em;
+    }
+
+    .section-head {
+      margin-bottom: 30px;
+    }
+
+    /* Cards */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 240px;
+      overflow: hidden;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 23px;
+      background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.055),
+        rgba(255,255,255,.018)
+      );
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+      backdrop-filter: blur(16px);
+      transition: .3s;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -90px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--orange);
+      filter: blur(65px);
+      opacity: .1;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,104,0,.3);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 21px;
+      border: 1px solid rgba(255,104,0,.18);
+      border-radius: 13px;
+      background: rgba(255,104,0,.1);
+      font-size: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* Kontakt */
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 40px;
+      border: 1px solid rgba(255,104,0,.2);
+      border-radius: 27px;
+      background:
+        radial-gradient(
+          circle at 90% 50%,
+          rgba(255,104,0,.14),
+          transparent 35%
+        ),
+        rgba(255,255,255,.035);
+      box-shadow: 0 25px 80px rgba(0,0,0,.4);
+    }
+
+    .contact p {
+      margin-top: 10px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .email {
+      color: white;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    /* Blue Banner */
+
+    .advertisement {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      margin-top: 60px;
+      padding: 19px 22px;
+      border: 1px solid rgba(77,163,255,.2);
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          100deg,
+          rgba(77,163,255,.07),
+          rgba(255,255,255,.025)
+        );
+      color: #bfc4ce;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .advertisement a {
+      color: white;
+      font-weight: 800;
+      transition: .2s;
+    }
+
+    .advertisement a:hover {
+      color: var(--blue);
+    }
+
+    /* Footer */
+
+    footer {
+      padding: 30px 0 35px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      color: #777b85;
+      font-size: 12px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .powered {
+      color: #b8bbc4;
+      transition: .2s;
+    }
+
+    .powered:hover {
+      color: var(--orange-light);
+    }
+
+    /* Animation */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+      transition:
+        opacity .7s ease,
+        transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+
+    @media (max-width: 800px) {
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .contact {
+        grid-template-columns: 1fr;
+        padding: 29px;
+      }
+
+      .contact .button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 520px) {
+
+      .container {
+        width: min(100% - 26px, 1120px);
+      }
+
+      nav {
+        padding: 12px 0;
+      }
+
+      .brand-sub {
+        display: none;
+      }
+
+      .brand-name {
+        font-size: 13px;
+      }
+
+      .hero {
+        min-height: 88vh;
+        padding-top: 130px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .advertisement {
+        margin-top: 40px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="noise"></div>
+  <div class="orb orange"></div>
+  <div class="orb blue"></div>
+
+  <!-- Navigation -->
+
+  <nav>
+    <div class="container nav-inner">
+
+      <a href="#" class="brand">
+
+        <div class="brand-logo">
+          SOS
+        </div>
+
+        <div>
+          <div class="brand-name">
+            SOS Management Group
+          </div>
+
+          <span class="brand-sub">
+            Newcomer Management
+          </span>
+        </div>
+
+      </a>
+
+      <a href="#kontakt" class="nav-button">
+        Kontakt aufnehmen →
+      </a>
+
+    </div>
+  </nav>
+
+
+  <!-- Hauptbereich -->
+
+  <main>
+
+    <section class="hero">
+
+      <div class="container hero-content">
+
+        <div class="status">
+          <span class="status-dot"></span>
+          Newcomer Management • Wir helfen weiter
+        </div>
+
+        <h1>
+          Willkommen bei<br>
+          <span>SOS Management Group</span>
+        </h1>
+
+        <p class="hero-description">
+
+          Hey! Wir sind die SOS Management Group – ein Newcomer Management,
+          das sich um eure Anliegen kümmert.
+
+          Unser Fokus liegt auf
+          <strong>Emergency Emden Privat DC Servern</strong>
+          sowie auf TikTok-Accounts, die beispielsweise grundlos eine
+          Warnung, Altersbeschränkung oder ähnliche Probleme bekommen haben.
+
+        </p>
+
+        <div class="buttons">
+
+          <a
+            class="button primary"
+            href="mailto:kontakt-sosmanagementgroup@outlook.de"
+          >
+            ✉️ Kontakt aufnehmen
+          </a>
+
+          <a
+            class="button secondary"
+            href="https://instagram.com/sosmanagementgroup"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ◎ Instagram
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Leistungen -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-head reveal">
+
+          <div class="eyebrow">
+            Was wir machen
+          </div>
+
+          <h2>
+            Dein Anliegen. Unsere Unterstützung.
+          </h2>
+
+        </div>
+
+
+        <div class="cards">
+
+          <article class="card reveal">
+
+            <div class="icon">
+              🚨
+            </div>
+
+            <h3>
+              Emergency Emden
+            </h3>
+
+            <p>
+              Wir beschäftigen uns mit Anliegen rund um
+              Emergency Emden Privat DC Server und unterstützen
+              euch bei Problemen und Fragen.
+            </p>
+
+          </article>
+
+
+          <article class="card reveal">
+
+            <div class="icon">
+              ♪
+            </div>
+
+            <h3>
+              TikTok Anliegen
+            </h3>
+
+            <p>
+              Eine Warnung, Altersbeschränkung oder eine andere
+              Einschränkung erscheint euch ungerechtfertigt?
+              Meldet euch gerne bei uns.
+            </p>
+
+          </article>
+
+
+          <article class="card reveal">
+
+            <div class="icon">
+              ⚡
+            </div>
+
+            <h3>
+              Schnell & direkt
+            </h3>
+
+            <p>
+              Schreibt uns mit eurem Anliegen. Wir schauen uns
+              den Fall an und versuchen, euch so gut wie möglich
+              weiterzuhelfen.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Kontakt -->
+
+    <section id="kontakt">
+
+      <div class="container">
+
+        <div class="contact reveal">
+
+          <div>
+
+            <div class="eyebrow">
+              Kontakt
+            </div>
+
+            <h2>
+              Du brauchst Unterstützung?
+            </h2>
+
+            <p>
+              Dann kontaktiere uns per E-Mail oder über Instagram.
+              Wir freuen uns, von dir zu hören.
+            </p>
+
+            <p>
+              <a
+                class="email"
+                href="mailto:kontakt-sosmanagementgroup@outlook.de"
+              >
+                kontakt-sosmanagementgroup@outlook.de
+              </a>
+            </p>
+
+          </div>
+
+
+          <div class="buttons">
+
+            <a
+              class="button primary"
+              href="mailto:kontakt-sosmanagementgroup@outlook.de"
+            >
+              E-Mail schreiben
+            </a>
+
+            <a
+              class="button secondary"
+              href="https://instagram.com/sosmanagementgroup"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram öffnen
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- Werbung -->
+
+        <div class="advertisement reveal">
+
+          Diese Website wurde von
+
+          <a
+            href="https://website-v2-vw3m.onrender.com/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Blue ⚡
+          </a>
+
+          erstellt.
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+
+  <footer>
+
+    <div class="container footer-inner">
+
+      <div>
+        © 2026 SOS Management Group — Alle Rechte vorbehalten
+      </div>
+
+      <a
+        class="powered"
+        href="https://website-v2-vw3m.onrender.com/impressum.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Powered by Blue ⚡
+      </a>
+
+    </div>
+
+  </footer>
+
+
+  <!-- Scroll-Animationen -->
+
+  <script>
+
+    const observer = new IntersectionObserver(
+
+      (entries) => {
+
+        entries.forEach((entry) => {
+
+          if (entry.isIntersecting) {
+
+            entry.target.classList.add("visible");
+
+            observer.unobserve(entry.target);
+
+          }
+
+        });
+
+      },
+
+      {
+        threshold: 0.12
+      }
+
+    );
+
+
+    document
+      .querySelectorAll(".reveal")
+      .forEach((element) => observer.observe(element));
+
+  </script>
+
+</body>
+</html>
+```
